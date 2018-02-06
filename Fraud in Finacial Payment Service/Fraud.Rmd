@@ -1,0 +1,107 @@
+---
+title: "Fraud Detection"
+output: github_document
+---
+
+Read the dataset
+```{r}
+#fraud_data = read.csv("Fraud.csv")
+
+```
+Check for NA or null
+```{r}
+
+anyNA(fraud_data)
+```
+Data set has no Null or NA 
+
+
+
+Let see the nature of the data
+```{r}
+summary(fraud_data)
+```
+
+From the above, the Features are:
+
+1) Step Represent the hour the transaction.
+2) Type of the transaction Cash_In,Cash_Out, DEBIT, PAYMENT, TRANSFER.
+3) A Mount money transferred.
+4) nameOrgin is Sender info
+5) Oldbalanceorg is the balance before sending 
+6) NewbalnceOrgin is the balance after sending
+7) name Destination is the receiver info.
+8) oldbalancdest is the balance before receiving the money.
+9) Oldbalancdest is the balance after the amount received,
+10) isFraud is the transaction is corrupted or Proper valid Transaction (0 or 1).
+
+
+
+visualize Data.
+
+
+
+Let see what the ratio of fraud vs valid transaction
+```{r}
+print(nrow(fraud_data[fraud_data$isFraud == 0,]))
+print(nrow(fraud_data[fraud_data$isFraud == 1,]))
+```
+
+lets see all the transaction with the fraud transaction for each Type of Transaction.
+
+```{r}
+print(nrow( fraud_data[fraud_data$type == "CASH_IN" & fraud_data$isFraud == 1,]))
+
+print(nrow( fraud_data[fraud_data$type ==  "CASH_OUT" & fraud_data$isFraud == 1,]))
+print(nrow( fraud_data[fraud_data$type ==  "DEBIT" & fraud_data$isFraud == 1,]))
+print(nrow( fraud_data[fraud_data$type ==  "PAYMENT" & fraud_data$isFraud == 1,]))
+print(nrow( fraud_data[fraud_data$type ==  "TRANSFER" & fraud_data$isFraud == 1,]))
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(fraud_data, aes( x = type, y = isFraud ,color = type )) + geom_point() + theme_classic()
+```
+
+
+From the above we can see both the CASH_OUT and Transfer Alone have Fradulent. and both have equal amount of transaction 4116 and 4097  
+
+Let see the Transaction where max and min of Fraud transaction
+
+
+
+```{r}
+library(ggplot2)
+
+ggplot(fraud_data, aes(x = type ) ) + geom_bar(aes(fill =isFraud)) + theme_bw()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
